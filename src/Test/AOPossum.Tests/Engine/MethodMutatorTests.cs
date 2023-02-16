@@ -42,7 +42,7 @@ namespace AOPossum.Tests.Engine
 
 			var assemblyBytes = new MemoryStream(System.IO.File.ReadAllBytes(CommonVars.MockLibOutput));
 			var mock = _context.LoadFromStream(assemblyBytes);
-			//Assembly.LoadFile(Path.GetFullPath(CommonVars.MockLibOutput));
+
 			dynamic instance = mock.CreateInstance("MockLibrary.MethodAspectTest");
 			instance.HelloWorld("This is my method");
 		}
@@ -51,19 +51,14 @@ namespace AOPossum.Tests.Engine
 		public void CreateMethodArgsTest()
 		{
 			TypeDefinition t = _mock.MainModule.GetType("MockLibrary.MethodAspectTest");
-			//TypeDefinition att = _aopModule.GetType(typeof(Logging.ConsoleLogAttribute).FullName);
-
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void MockLibrary.MethodAspectTest::HelloWorld(System.String)");
-			//MethodDefinition pre = att.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Logging.ConsoleLogAttribute::OnEntry(AOPossum.Aspects.MethodExecutionArgs)");
-
 			MethodMutator.CreateMethodArgs<ConsoleLogAttribute>(m);
 
-			// Write the module with default parameters
 			_mock.Write(CommonVars.MockLibOutput);
 
 			var assemblyBytes = new MemoryStream(System.IO.File.ReadAllBytes(CommonVars.MockLibOutput));
 			var mock = _context.LoadFromStream(assemblyBytes);
-			//Assembly.LoadFile(Path.GetFullPath(CommonVars.MockLibOutput));
+
 			dynamic instance = mock.CreateInstance("MockLibrary.MethodAspectTest");
 			instance.HelloWorld("This is my method");
 		}
