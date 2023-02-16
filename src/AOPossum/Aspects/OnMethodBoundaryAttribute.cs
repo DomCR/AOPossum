@@ -8,6 +8,15 @@
 	{
 		public virtual void OnEntry() { }
 
+		public virtual void OnEntry(MethodExecutionArgs args) { }
+
 		public virtual void OnExit() { }
+
+		public virtual void OnExit(MethodExecutionArgs args) { }
+	}
+
+	public interface IOnMethodBoundary
+	{
+		void OnEntry(MethodExecutionArgs args);
 	}
 }

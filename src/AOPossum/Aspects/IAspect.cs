@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AOPossum.Aspects
 {
-	internal interface IAspect
+	public interface IAspect
 	{
 	}
 }
