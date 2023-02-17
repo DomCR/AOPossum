@@ -1,9 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'">
+    <Exec Command="call &quot;$(SolutionDir)\AOPossum.Engine\bin\Debug\net6.0\AOPossum.Engine.exe&quot; &quot;$(TargetPath)&quot;"
+          ConsoleToMSBuild="true" 
+          Condition="'$(targetframework)' == 'net6.0'"/>
+  </Target>
 
 </Project>

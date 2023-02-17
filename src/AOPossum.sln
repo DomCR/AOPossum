@@ -5,36 +5,65 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum", "AOPossum\AOPossum.csproj", "{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOPossum.Engine", "AOPossum.Engine\AOPossum.Engine.csproj", "{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum.Engine", "AOPossum.Engine\AOPossum.Engine.csproj", "{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{371A55F3-E594-4E8F-A7BF-FDF0459958C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockLibrary", "Test\MockLibrary\MockLibrary.csproj", "{9589BEA1-5F51-41BA-AECD-E6478006E8D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockLibrary", "Test\MockLibrary\MockLibrary.csproj", "{9589BEA1-5F51-41BA-AECD-E6478006E8D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203} = {CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOPossum.Tests", "Test\AOPossum.Tests\AOPossum.Tests.csproj", "{7A499716-9E58-4628-A3CA-DBDDD5D0192B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum.Tests", "Test\AOPossum.Tests\AOPossum.Tests.csproj", "{7A499716-9E58-4628-A3CA-DBDDD5D0192B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{58F7A2C0-82E9-4032-B203-C1D52DD47BD3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum.Samples.ConsoleLogging.Default", "..\samples\AOPossum.Samples.ConsoleLogging.Default\AOPossum.Samples.ConsoleLogging.Default.csproj", "{AED09222-D76C-4C17-8C26-6143F565FDB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F1F4A40-E754-4AFF-89BB-4519B141EDA4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Test|Any CPU = Test|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187}.Test|Any CPU.Build.0 = Test|Any CPU
 		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}.Test|Any CPU.Build.0 = Test|Any CPU
 		{9589BEA1-5F51-41BA-AECD-E6478006E8D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9589BEA1-5F51-41BA-AECD-E6478006E8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9589BEA1-5F51-41BA-AECD-E6478006E8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9589BEA1-5F51-41BA-AECD-E6478006E8D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9589BEA1-5F51-41BA-AECD-E6478006E8D7}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{9589BEA1-5F51-41BA-AECD-E6478006E8D7}.Test|Any CPU.Build.0 = Release|Any CPU
 		{7A499716-9E58-4628-A3CA-DBDDD5D0192B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A499716-9E58-4628-A3CA-DBDDD5D0192B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A499716-9E58-4628-A3CA-DBDDD5D0192B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A499716-9E58-4628-A3CA-DBDDD5D0192B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A499716-9E58-4628-A3CA-DBDDD5D0192B}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{7A499716-9E58-4628-A3CA-DBDDD5D0192B}.Test|Any CPU.Build.0 = Release|Any CPU
+		{AED09222-D76C-4C17-8C26-6143F565FDB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED09222-D76C-4C17-8C26-6143F565FDB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED09222-D76C-4C17-8C26-6143F565FDB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED09222-D76C-4C17-8C26-6143F565FDB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED09222-D76C-4C17-8C26-6143F565FDB9}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{AED09222-D76C-4C17-8C26-6143F565FDB9}.Test|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +71,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9589BEA1-5F51-41BA-AECD-E6478006E8D7} = {371A55F3-E594-4E8F-A7BF-FDF0459958C0}
 		{7A499716-9E58-4628-A3CA-DBDDD5D0192B} = {371A55F3-E594-4E8F-A7BF-FDF0459958C0}
+		{AED09222-D76C-4C17-8C26-6143F565FDB9} = {58F7A2C0-82E9-4032-B203-C1D52DD47BD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4094E60-D42B-4806-8FF2-D5C04531AB6B}

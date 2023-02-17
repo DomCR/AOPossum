@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      AOPossum.Engine
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call &quot;..\OtterSharp.Engine.exe&quot; &quot;$(TargetPath)&quot;" ConsoleToMSBuild="true"/>
+  </Target>
+</Project>

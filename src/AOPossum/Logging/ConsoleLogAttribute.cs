@@ -3,7 +3,7 @@
 namespace AOPossum.Logging
 {
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
-	public class ConsoleLogAttribute : Aspect, IOnMethodBoundary
+	public class ConsoleLogAttribute : Aspect, IOnEntryMethodBoundary
 	{
 		public void LogEntry()
 		{

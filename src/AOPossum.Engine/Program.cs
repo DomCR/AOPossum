@@ -1,37 +1,46 @@
-﻿namespace AOPossum.Engine
+﻿using AOPossum.Engine.Loggers;
+
+namespace AOPossum.Engine
 {
 	public class Program
 	{
 		public static void Main(params string[] args)
 		{
-			Console.WriteLine("OtterSharp.Engine Start");
+			ConsoleLogger.LogInformation("AOPossum.Engine Start");
 
 			try
 			{
-				string path = "";
-				saveOriginalAssembly(path);
+#if TEST
+				string path = @"..\..\..\..\Test\MockLibrary\bin\Debug\net6.0\MockLibrary.dll";
+#else
+				string path = args.FirstOrDefault();
+#endif
+				if (string.IsNullOrEmpty(path) || !File.Exists(path))
+				{
+					throw new ArgumentException("No dll Assembly found", nameof(path));
+				}
 
+				string original = saveOriginalAssembly(path);
 			}
 			catch (Exception ex)
 			{
-				Console.Error.WriteLine(ex);
-			}
-			finally
-			{
-				Console.ResetColor();
+				ConsoleLogger.LogCritical("Critical error ocurred", ex);
 			}
 
-			Console.WriteLine("OtterSharp.Engine End");
+			ConsoleLogger.LogInformation("AOPossum.Engine End");
 		}
 
 		private static string saveOriginalAssembly(string path)
 		{
-			//Save the original assembly
-			string folder = Path.GetDirectoryName(path);
-			string old = Path.Combine(folder, $"{Path.GetFileNameWithoutExtension(path)}.original.dll");
-			System.IO.File.Copy(path, old, true);
+			ConsoleLogger.LogInformation("Save the original assembly");
 
-			return old;
+			string folder = Path.GetDirectoryName(path);
+			string original = Path.Combine(folder, $"{Path.GetFileNameWithoutExtension(path)}.original.dll");
+			System.IO.File.Copy(path, original, true);
+
+			ConsoleLogger.LogInformation($"Saved as {original}");
+
+			return original;
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using AOPossum.Logging;
 using AOPossum.Tests.Common;
 using Mono.Cecil;
+using System.Reflection;
 using System.Runtime.Loader;
 using Xunit.Abstractions;
 
@@ -9,13 +10,11 @@ namespace AOPossum.Tests.Engine
 {
 	public class MethodMutatorTests : IDisposable
 	{
-		private ConsoleOutputUtil _output;
-
 		private AssemblyLoadContext _context;
 
-		private AssemblyDefinition _mock;
+		private ConsoleOutputUtil _output;
 
-		private ModuleDefinition _aopModule;
+		private AssemblyDefinition _mock;
 
 		public MethodMutatorTests(ITestOutputHelper output)
 		{
@@ -24,50 +23,76 @@ namespace AOPossum.Tests.Engine
 			_output = new ConsoleOutputUtil(output);
 			Console.SetOut(_output);
 
-			MemoryStream ms = new MemoryStream(File.ReadAllBytes(CommonVars.MockLibOriginal));
-			_mock = AssemblyDefinition.ReadAssembly(ms);
-			_aopModule = AssemblyDefinition.ReadAssembly("AOPossum.dll").MainModule;
+			_mock = AssemblyDefinition.ReadAssembly(File.OpenRead(Assembly.GetExecutingAssembly().Location));
 		}
 
 		[Fact]
-		public void AddStaticLoggerTest()
+		public void AddOnEntryAspectNoParametersTest()
 		{
-			TypeDefinition t = _mock.MainModule.GetType("MockLibrary.MethodAspectTest");
-			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void MockLibrary.MethodAspectTest::HelloWorld(System.String)");
+			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
+			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithNoParamaters()");
 
-			MethodMutator.CreateMethodArgs(m);
+			MethodMutator mutator = new MethodMutator(m);
+			mutator.AddOnEntryAspect<ConsoleLogAttribute>();
 
-			// Write the module with default parameters
-			_mock.Write(CommonVars.MockLibOutput);
+			Assembly mock = reloadMockAssembly();
 
-			var assemblyBytes = new MemoryStream(System.IO.File.ReadAllBytes(CommonVars.MockLibOutput));
-			var mock = _context.LoadFromStream(assemblyBytes);
+			dynamic instance = mock.CreateInstance(typeof(Mocks.ConsoleLabMock).FullName);
+			instance.MethodWithNoParamaters();
 
-			dynamic instance = mock.CreateInstance("MockLibrary.MethodAspectTest");
-			instance.HelloWorld("This is my method");
+			Assert.Equal("OnEntry executed in : MethodWithNoParamaters", this._output.OutputLines[0]);
+			Assert.Equal("MethodWithNoParamaters", this._output.OutputLines[1]);
 		}
 
 		[Fact]
-		public void CreateMethodArgsTest()
+		public void AddOnEntryAspectOneParameterTest()
 		{
-			TypeDefinition t = _mock.MainModule.GetType("MockLibrary.MethodAspectTest");
-			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void MockLibrary.MethodAspectTest::HelloWorld(System.String)");
-			MethodMutator.CreateMethodArgs<ConsoleLogAttribute>(m);
+			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
+			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithOneParamater(System.String)");
 
-			_mock.Write(CommonVars.MockLibOutput);
+			MethodMutator mutator = new MethodMutator(m);
+			mutator.AddOnEntryAspect<ConsoleLogAttribute>();
 
-			var assemblyBytes = new MemoryStream(System.IO.File.ReadAllBytes(CommonVars.MockLibOutput));
-			var mock = _context.LoadFromStream(assemblyBytes);
+			Assembly mock = reloadMockAssembly();
 
-			dynamic instance = mock.CreateInstance("MockLibrary.MethodAspectTest");
-			instance.HelloWorld("This is my method");
+			dynamic instance = mock.CreateInstance(typeof(Mocks.ConsoleLabMock).FullName);
+			instance.MethodWithOneParamater("test parameter");
+
+			Assert.Equal("OnEntry executed in : MethodWithOneParamater", this._output.OutputLines[0]);
+			Assert.Equal("test parameter", this._output.OutputLines[1]);
+		}
+
+		[Fact]
+		public void AddOnEntryAspectOneParameterTypeTest()
+		{
+			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
+			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithOneParamater(System.String)");
+
+			MethodMutator mutator = new MethodMutator(m);
+			mutator.AddOnEntryAspect(typeof(ConsoleLogAttribute));
+
+			Assembly mock = reloadMockAssembly();
+
+			dynamic instance = mock.CreateInstance(typeof(Mocks.ConsoleLabMock).FullName);
+			instance.MethodWithOneParamater("test parameter");
+
+			Assert.Equal("OnEntry executed in : MethodWithOneParamater", this._output.OutputLines[0]);
+			Assert.Equal("test parameter", this._output.OutputLines[1]);
 		}
 
 		public void Dispose()
 		{
-			this._aopModule.Assembly.Dispose();
 			this._mock.Dispose();
 			this._context.Unload();
+		}
+
+		private Assembly reloadMockAssembly()
+		{
+			MemoryStream ms = new MemoryStream();
+			_mock.Write(ms);
+			ms.Seek(0, SeekOrigin.Begin);
+
+			return _context.LoadFromStream(ms);
 		}
 	}
 }

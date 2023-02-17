@@ -3,6 +3,34 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>AOPossum</PackageId>
+    <Authors>DomCr</Authors>
+    <PackageTags>C# AOP</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DomCR/AOPossum</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DomCR/AOPossum</PackageProjectUrl>
+    <Copyright>Copyright (c) 2023 Albert Domenech</Copyright>
+    <Description>AOP framework for .NET</Description>
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
