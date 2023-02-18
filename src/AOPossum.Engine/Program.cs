@@ -1,4 +1,5 @@
-﻿using AOPossum.Engine.Loggers;
+﻿using AOPossum.Engine.Core;
+using AOPossum.Engine.Loggers;
 
 namespace AOPossum.Engine
 {
@@ -11,7 +12,7 @@ namespace AOPossum.Engine
 			try
 			{
 #if TEST
-				string path = @"..\..\..\..\Test\MockLibrary\bin\Debug\net6.0\MockLibrary.dll";
+				string path = @"..\..\..\..\Test\MockLibrary\bin\Test\net6.0\MockLibrary.dll";
 #else
 				string path = args.FirstOrDefault();
 #endif
@@ -21,6 +22,11 @@ namespace AOPossum.Engine
 				}
 
 				string original = saveOriginalAssembly(path);
+
+				PossumBypass bypass = new PossumBypass(path, original);
+				bypass.Resolve();
+
+				bypass.Save();
 			}
 			catch (Exception ex)
 			{

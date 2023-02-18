@@ -1,12 +1,12 @@
 ﻿using AOPossum.Aspects;
 using AOPossum.Engine.Extensions;
-using AOPossum.Logging;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System.Reflection;
 
 namespace AOPossum.Engine.Core
 {
+	[Obsolete("Move to MethodDefinitionExtensions")]
 	public class MethodMutator
 	{
 		public MethodDefinition Definition { get; }
