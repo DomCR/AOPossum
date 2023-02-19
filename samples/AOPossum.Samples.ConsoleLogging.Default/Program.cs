@@ -6,7 +6,7 @@ namespace AOPossum.Samples.ConsoleLogging.Default
 	{
 		public static void Main(params string[] args)
 		{
-
+			AOPossum.Engine.Program ap = null;
 		}
 	}
 }

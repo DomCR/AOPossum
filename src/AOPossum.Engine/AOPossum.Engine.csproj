@@ -11,6 +11,7 @@
   <PropertyGroup>
     <PackageId>AOPossum.Engine</PackageId>
     <Authors>DomCr</Authors>
+    <Version>1.0.0</Version>
     <PackageTags>C# AOP</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
@@ -24,7 +25,7 @@
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.0</Version>
+    <PackAsTool>True</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,5 +42,16 @@
   <ItemGroup>
     <ProjectReference Include="..\AOPossum\AOPossum.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AOPossum.Engine.targets">
+      <PackagePath>build</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />
+  </Target>
 
 </Project>

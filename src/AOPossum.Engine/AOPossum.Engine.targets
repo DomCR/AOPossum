@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call &quot;..\OtterSharp.Engine.exe&quot; &quot;$(TargetPath)&quot;" ConsoleToMSBuild="true"/>
+    <Exec Command="call &quot;$(NuGetPackageRoot)\AOPossum.Engine.exe&quot; &quot;$(TargetPath)&quot;" ConsoleToMSBuild="true"/>
   </Target>
 </Project>
+
+<!--https://learn.microsoft.com/en-us/archive/blogs/msbuild/how-to-add-custom-process-at-specific-points-during-build-method-2-->
