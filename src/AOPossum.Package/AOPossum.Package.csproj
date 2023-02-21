@@ -4,7 +4,6 @@
   <PropertyGroup>
     <PackageId>AOPossum</PackageId>
     <Authors>DomCr</Authors>
-    <Version>0.0.0</Version>
     <PackageTags>C# AOP</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
@@ -55,9 +54,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <TfmSpecificPackageFile Include="$(PublishEngine)/**/AOPossum.Engine.exe">
-        <PackagePath>build/bin</PackagePath>
-      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.exe"/>
+      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.dll"/>
+      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.runtimeconfig.json"/>
     </ItemGroup>
 
     <ItemGroup>

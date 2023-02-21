@@ -10,9 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{371A55F3-E594-4E8F-A7BF-FDF0459958C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockLibrary", "Test\MockLibrary\MockLibrary.csproj", "{9589BEA1-5F51-41BA-AECD-E6478006E8D7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203} = {CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum.Tests", "Test\AOPossum.Tests\AOPossum.Tests.csproj", "{7A499716-9E58-4628-A3CA-DBDDD5D0192B}"
 EndProject
@@ -24,12 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		..\.gitignore = ..\.gitignore
+		Directory.Build.props = Directory.Build.props
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockConsole", "Test\MockConsole\MockConsole.csproj", "{D84B5859-6B8E-4448-A373-69E369BE0326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOPossum.Package", "AOPossum.Package\AOPossum.Package.csproj", "{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum.Package", "AOPossum.Package\AOPossum.Package.csproj", "{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203} = {CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}
 		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187} = {DBB6F461-A0DA-49D7-BE22-0A0FE7819187}

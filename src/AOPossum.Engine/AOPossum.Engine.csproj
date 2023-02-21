@@ -9,10 +9,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PublishSingleFile>true</PublishSingleFile>
+    <!--<PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishReadyToRun>true</PublishReadyToRun>-->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,19 +30,6 @@
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">false</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackAsTool>False</PackAsTool>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
   </ItemGroup>
@@ -49,16 +37,4 @@
   <ItemGroup>
     <ProjectReference Include="..\AOPossum\AOPossum.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="AOPossum.Engine.targets">
-      <PackagePath>build</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-  </ItemGroup>
-
-  <Target Name="CopyPackage" AfterTargets="Pack">
-    <!--<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />-->
-  </Target>
-
 </Project>

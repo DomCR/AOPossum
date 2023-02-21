@@ -4,6 +4,7 @@
 	{
 		public static void Main(params string[] args)
 		{
+			AOPossum.Aspects.Aspect a = null;
 		}
 	}
 }
