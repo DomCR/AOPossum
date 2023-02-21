@@ -22,13 +22,12 @@ namespace AOPossum.Aspects
 
 		public static MethodExecutionArgs Create()
 		{
-			// Get call stack
+			// TODO: MethodExecutionArgs Create() is it needed??
+
 			StackTrace stackTrace = new StackTrace();
-			// Get calling method name
 			StackFrame frame = stackTrace.GetFrame(1);
-
+			
 			MethodBase m = frame.GetMethod();
-
 			return new MethodExecutionArgs(m);
 		}
 	}

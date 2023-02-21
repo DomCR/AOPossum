@@ -6,17 +6,26 @@ namespace AOPossum.Logging
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
 	public class ConsoleLogAttribute : Aspect, IOnEntryMethodBoundary
 	{
-		public void LogEntry()
-		{
-			Console.WriteLine("Hello I'm at the entry of a method");
-		}
-
 		public void OnEntry(MethodExecutionArgs args)
 		{
 			StringBuilder str = new StringBuilder();
-			str.Append("TRACE");
+			str.Append("INFO");
+			str.Append(" | ");
+			str.Append(args.MethodBase.Name);
 
-			Console.WriteLine($"OnEntry executed in : {args.MethodBase.Name}");
+			if (args.Parameters.Any())
+			{
+				for (int i = 0; i < args.Parameters.Count(); i++)
+				{
+					str.Append(" | ");
+					str.Append($"[{args.MethodBase.GetParameters()[i].ParameterType.FullName}] {args.Parameters.ElementAt(i)}");
+				}
+			}
+
+			str.Append(" | ");
+			str.Append("START");
+
+			Console.WriteLine(str);
 		}
 
 		public void LogExit()
