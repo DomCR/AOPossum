@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--PACKAGE INFO-->
+  <PropertyGroup>
+    <PackageId>AOPossum</PackageId>
+    <Authors>DomCr</Authors>
+    <Version>0.0.0</Version>
+    <PackageTags>C# AOP</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DomCR/AOPossum</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DomCR/AOPossum</PackageProjectUrl>
+    <Copyright>Copyright (c) 2023 Albert Domenech</Copyright>
+    <Description>AOP framework for .NET</Description>
+  </PropertyGroup>
+
+  <!--FRAMEWORKS-->
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">True</GeneratePackageOnBuild>
+    <IncludeBuildOutput>False</IncludeBuildOutput>
+  </PropertyGroup>
+
+  <!--RUNTIMES-->
+  <PropertyGroup>
+    <PublishForRuntimes>win-x64;win-arm64;linux-x64;linux-musl-x64;linux-arm64;linux-musl-arm64;osx-x64;osx-arm64</PublishForRuntimes>
+  </PropertyGroup>
+
+  <!--PACKAGE DOCS N MEDIA-->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <!--PACKAGE FOLDERS-->
+  <ItemGroup>
+    <None Include="build/*.*" Pack="true" PackagePath="build/$(TargetFramework)" />
+    <None Include="tools/*.*" Pack="true" PackagePath="tools" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddFilesToPackage</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <!--PACKAGE FOLDERS-->
+  <Target Name="AddFilesToPackage">
+
+    <PropertyGroup>
+      <PublishEngine>$(SolutionDir)AOPossum.Engine/bin/$(Configuration)/$(TargetFramework)</PublishEngine>
+      <PublishAOPossum>$(SolutionDir)AOPossum/bin/$(Configuration)/$(TargetFramework)</PublishAOPossum>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PublishRids Include="$(PublishForRuntimes)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(PublishEngine)/**/AOPossum.Engine.exe">
+        <PackagePath>build/bin</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <TfmSpecificPackageFile PackagePath="lib/$(TargetFramework)" Include="$(PublishAOPossum)\AOPossum.dll" />
+      <TfmSpecificPackageFile PackagePath="lib/$(TargetFramework)" Include="$(PublishAOPossum)\AOPossum.xml" />
+    </ItemGroup>
+
+  </Target>
+
+  <Target Name="CopyPackage" AfterTargets="Pack" Condition="Exists('$(SolutionDir)..\..\.packages')">
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />
+  </Target>
+
+  <!--MS BUILD UTILS-->
+  <Target Name="TestMessage" AfterTargets="Build" >
+    <!-- Use $(Property Name) to reference a property -->
+    <!--<Message Text="MSG - $(SolutionDir)AOPossum.Engine/bin/$(Configuration)/$(TargetFramework)/$(PublishForRuntimes)/AOPossum.Engine.exe" Importance="high" />-->
+  </Target>
+
+</Project>

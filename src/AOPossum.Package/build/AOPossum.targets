@@ -1,0 +1,16 @@
+﻿<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      AOPossum.Engine
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(EnginePath)' == ''">
+    <EnginePath Condition="$([MSBuild]::IsOSPlatform('Windows')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'X64'">$(MSBuildThisFileDirectory)..\bin\win-x64\AOPossum.Engine.exe</EnginePath>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call &quot;$(NuGetPackageRoot)\AOPossum\$(PackageVersion)\lib\$(TargetFramework)\AOPossum.Engine.exe&quot; &quot;$(TargetPath)&quot;" ConsoleToMSBuild="true"/>
+  </Target>
+</Project>

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call &quot;$(NuGetPackageRoot)\AOPossum.Engine.exe&quot; &quot;$(TargetPath)&quot;" ConsoleToMSBuild="true"/>
+    <Exec Command="call &quot;$(NuGetPackageRoot)\AOPossum.Engine\$(PackageVersion)\lib\$(TargetFramework)\AOPossum.Engine.exe&quot; &quot;$(TargetPath)&quot;" ConsoleToMSBuild="true"/>
   </Target>
 </Project>
 

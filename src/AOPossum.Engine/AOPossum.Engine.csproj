@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>AOPossum.Engine</PackageId>
     <Authors>DomCr</Authors>
     <Version>1.0.0</Version>
@@ -19,13 +26,13 @@
     <PackageProjectUrl>https://github.com/DomCR/AOPossum</PackageProjectUrl>
     <Copyright>Copyright (c) 2023 Albert Domenech</Copyright>
     <Description>AOP framework for .NET</Description>
-    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackAsTool>True</PackAsTool>
+    <PackAsTool>False</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,7 +58,7 @@
   </ItemGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />
+    <!--<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />-->
   </Target>
 
 </Project>

@@ -27,7 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockConsole", "Test\MockConsole\MockConsole.csproj", "{D84B5859-6B8E-4448-A373-69E369BE0326}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockConsole", "Test\MockConsole\MockConsole.csproj", "{D84B5859-6B8E-4448-A373-69E369BE0326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOPossum.Package", "AOPossum.Package\AOPossum.Package.csproj", "{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD8BE55D-1CF7-401D-A6A9-D3A2317CA203} = {CD8BE55D-1CF7-401D-A6A9-D3A2317CA203}
+		{DBB6F461-A0DA-49D7-BE22-0A0FE7819187} = {DBB6F461-A0DA-49D7-BE22-0A0FE7819187}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +78,12 @@ Global
 		{D84B5859-6B8E-4448-A373-69E369BE0326}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D84B5859-6B8E-4448-A373-69E369BE0326}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{D84B5859-6B8E-4448-A373-69E369BE0326}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F5BFB8-AC7D-4FDD-B6C5-FA38D8B9CFCC}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
