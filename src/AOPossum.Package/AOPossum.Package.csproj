@@ -3,7 +3,6 @@
   <!--FRAMEWORKS-->
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">True</GeneratePackageOnBuild>
     <IncludeBuildOutput>False</IncludeBuildOutput>
   </PropertyGroup>

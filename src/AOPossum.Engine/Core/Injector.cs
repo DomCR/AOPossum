@@ -7,14 +7,14 @@ using System.Reflection;
 
 namespace AOPossum.Engine.Core
 {
-	public class PossumBypass
+	public class Injector
 	{
 		private readonly static ModuleDefinition _possum = AssemblyDefinition.ReadAssembly("AOPossum.dll").MainModule;
 		private string _path;
 		private Assembly _assembly;
 		private AssemblyDefinition _assemblyDefinition;
 
-		public PossumBypass(string assemblyPath, string original)
+		public Injector(string assemblyPath, string original)
 		{
 			this._path = assemblyPath;
 
@@ -47,6 +47,8 @@ namespace AOPossum.Engine.Core
 
 		private void resolveAssembly()
 		{
+			IEnumerable<Aspect> assemblyAspects = this._assembly.GetCustomAttributes<Aspect>();
+
 			Mono.Collections.Generic.Collection<CustomAttribute> customAtts = this._assemblyDefinition.CustomAttributes;
 		}
 

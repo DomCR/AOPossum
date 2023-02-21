@@ -6,6 +6,6 @@
     <LangVersion>latest</LangVersion>
     <Configurations>Debug;Release;Test</Configurations>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyVersion >1.0.0</AssemblyVersion>
+    <AssemblyVersion Condition="'$(Configuration)' == 'Debug'">1.0.0</AssemblyVersion>
   </PropertyGroup>
 </Project>

@@ -23,7 +23,7 @@ namespace AOPossum.Engine
 
 				string original = saveOriginalAssembly(path);
 
-				PossumBypass bypass = new PossumBypass(path, original);
+				Injector bypass = new Injector(path, original);
 				bypass.Resolve();
 
 				bypass.Save();

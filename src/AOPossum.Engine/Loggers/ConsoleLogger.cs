@@ -11,6 +11,7 @@
 		{
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine($"WARN:	{message}");
+			Console.WriteLine(ex.Message);
 			Console.ResetColor();
 		}
 
@@ -18,6 +19,7 @@
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine($"ERROR:	{message}");
+			Console.WriteLine(ex.Message);
 			Console.ResetColor();
 		}
 
@@ -25,6 +27,7 @@
 		{
 			Console.ForegroundColor = ConsoleColor.DarkRed;
 			Console.WriteLine($"CRIT:	{message}");
+			Console.WriteLine(ex.Message);
 			Console.ResetColor();
 		}
 	}

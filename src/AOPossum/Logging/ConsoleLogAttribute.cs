@@ -1,4 +1,5 @@
 ﻿using AOPossum.Aspects;
+using System.Text;
 
 namespace AOPossum.Logging
 {
@@ -12,6 +13,9 @@ namespace AOPossum.Logging
 
 		public void OnEntry(MethodExecutionArgs args)
 		{
+			StringBuilder str = new StringBuilder();
+			str.Append("TRACE");
+
 			Console.WriteLine($"OnEntry executed in : {args.MethodBase.Name}");
 		}
 
