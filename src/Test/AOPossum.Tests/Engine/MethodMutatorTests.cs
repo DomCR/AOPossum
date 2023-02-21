@@ -1,4 +1,5 @@
 ﻿using AOPossum.Engine.Core;
+using AOPossum.Engine.Extensions;
 using AOPossum.Logging;
 using AOPossum.Tests.Common;
 using Mono.Cecil;
@@ -20,10 +21,10 @@ namespace AOPossum.Tests.Engine
 		{
 			this._context = new CollectibleAssemblyLoadContext();
 
-			_output = new ConsoleOutputUtil(output);
+			this._output = new ConsoleOutputUtil(output);
 			Console.SetOut(_output);
 
-			_mock = AssemblyDefinition.ReadAssembly(File.OpenRead(Assembly.GetExecutingAssembly().Location));
+			this._mock = AssemblyDefinition.ReadAssembly(File.OpenRead(Assembly.GetExecutingAssembly().Location));
 		}
 
 		[Fact]
@@ -32,8 +33,7 @@ namespace AOPossum.Tests.Engine
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithNoParamaters()");
 
-			MethodMutator mutator = new MethodMutator(m);
-			mutator.AddOnEntryAspect<ConsoleLogAttribute>();
+			m.AddOnEntryAspect(typeof(ConsoleLogAttribute));
 
 			Assembly mock = reloadMockAssembly();
 
@@ -50,8 +50,7 @@ namespace AOPossum.Tests.Engine
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithOneParamater(System.String)");
 
-			MethodMutator mutator = new MethodMutator(m);
-			mutator.AddOnEntryAspect<ConsoleLogAttribute>();
+			m.AddOnEntryAspect(typeof(ConsoleLogAttribute));
 
 			Assembly mock = reloadMockAssembly();
 
@@ -68,8 +67,7 @@ namespace AOPossum.Tests.Engine
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithOneParamater(System.String)");
 
-			MethodMutator mutator = new MethodMutator(m);
-			mutator.AddOnEntryAspect(typeof(ConsoleLogAttribute));
+			m.AddOnEntryAspect(typeof(ConsoleLogAttribute));
 
 			Assembly mock = reloadMockAssembly();
 

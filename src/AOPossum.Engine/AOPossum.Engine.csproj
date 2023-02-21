@@ -1,33 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>AOPossum.Engine</AssemblyName>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <Configurations>Debug;Release;Test</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!--<PublishSingleFile>true</PublishSingleFile>
-    <SelfContained>true</SelfContained>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PublishReadyToRun>true</PublishReadyToRun>-->
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageId>AOPossum.Engine</PackageId>
-    <Authors>DomCr</Authors>
-    <Version>1.0.0</Version>
-    <PackageTags>C# AOP</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/DomCR/AOPossum</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/DomCR/AOPossum</PackageProjectUrl>
-    <Copyright>Copyright (c) 2023 Albert Domenech</Copyright>
-    <Description>AOP framework for .NET</Description>
-    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

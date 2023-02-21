@@ -14,7 +14,7 @@
   </Target>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AOPossum\AOPossum.csproj" />
+    <ProjectReference Include="..\..\AOPossum\AOPossum.csproj" version="*"/>
   </ItemGroup>
 
 </Project>

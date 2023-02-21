@@ -1,18 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <!--PACKAGE INFO-->
-  <PropertyGroup>
-    <PackageId>AOPossum</PackageId>
-    <Authors>DomCr</Authors>
-    <PackageTags>C# AOP</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/DomCR/AOPossum</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/DomCR/AOPossum</PackageProjectUrl>
-    <Copyright>Copyright (c) 2023 Albert Domenech</Copyright>
-    <Description>AOP framework for .NET</Description>
-  </PropertyGroup>
-
   <!--FRAMEWORKS-->
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>

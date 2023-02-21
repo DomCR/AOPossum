@@ -1,6 +1,20 @@
 <Project>
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <Version>0.0.1</Version>
   </PropertyGroup>
+
+  <!--INFORMATION-->
+  <PropertyGroup>
+    <PackageId>AOPossum</PackageId>
+    <Authors>DomCr</Authors>
+    <Version>0.0.1</Version>
+    <PackageTags>C# AOP</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DomCR/AOPossum</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DomCR/AOPossum</PackageProjectUrl>
+    <Copyright>Copyright (c) 2023 Albert Domenech</Copyright>
+    <Description>AOP framework for .NET</Description>
+  </PropertyGroup>
+  
 </Project>
