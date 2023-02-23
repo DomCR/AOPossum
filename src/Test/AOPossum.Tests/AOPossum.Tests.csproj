@@ -28,4 +28,6 @@
     <ProjectReference Include="..\..\AOPossum\AOPossum.csproj" />
   </ItemGroup>
 
+  <Import Project="..\Mock.Shared\Mock.Shared.projitems" Label="Shared" />
+
 </Project>

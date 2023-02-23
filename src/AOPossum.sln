@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOPossum.Package", "AOPossu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOPossum.Tests", "Test\AOPossum.Tests\AOPossum.Tests.csproj", "{6D4AB22B-9A77-4CE7-96A3-B737EA9CAAA7}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Mock.Shared", "Test\Mock.Shared\Mock.Shared.shproj", "{41521AB4-AFAE-40B3-8BB6-C5DE8CCF1C7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,8 +93,14 @@ Global
 		{AED09222-D76C-4C17-8C26-6143F565FDB9} = {58F7A2C0-82E9-4032-B203-C1D52DD47BD3}
 		{D84B5859-6B8E-4448-A373-69E369BE0326} = {371A55F3-E594-4E8F-A7BF-FDF0459958C0}
 		{6D4AB22B-9A77-4CE7-96A3-B737EA9CAAA7} = {371A55F3-E594-4E8F-A7BF-FDF0459958C0}
+		{41521AB4-AFAE-40B3-8BB6-C5DE8CCF1C7E} = {371A55F3-E594-4E8F-A7BF-FDF0459958C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4094E60-D42B-4806-8FF2-D5C04531AB6B}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Test\Mock.Shared\Mock.Shared.projitems*{41521ab4-afae-40b3-8bb6-c5de8ccf1c7e}*SharedItemsImports = 13
+		Test\Mock.Shared\Mock.Shared.projitems*{6d4ab22b-9a77-4ce7-96a3-b737ea9caaa7}*SharedItemsImports = 5
+		Test\Mock.Shared\Mock.Shared.projitems*{9589bea1-5f51-41ba-aecd-e6478006e8d7}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
