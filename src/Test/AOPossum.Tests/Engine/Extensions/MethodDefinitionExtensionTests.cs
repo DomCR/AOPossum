@@ -2,8 +2,12 @@
 using AOPossum.Logging;
 using AOPossum.Tests.Common;
 using Mono.Cecil;
+using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace AOPossum.Tests.Engine.Extensions

@@ -1,4 +1,5 @@
-﻿using MockLibrary.Logging;
+﻿//using MockLibrary.Logging;
+using System;
 
 namespace MockConsole
 {
@@ -6,9 +7,12 @@ namespace MockConsole
 	{
 		static void Main(string[] args)
 		{
-			MockConsoleLoggerMethodLevel mock = new MockConsoleLoggerMethodLevel();
-			mock.MethodToLog1();
-			mock.MethodToLog2();
+			//MockConsoleLoggerMethodLevel mock = new MockConsoleLoggerMethodLevel();
+			//mock.MethodToLog1();
+			//mock.MethodToLog2();
+
+			Console.WriteLine("Hello World");
+			Console.ReadKey();
 		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using AOPossum.Aspects;
+using System;
+using System.Linq;
 using System.Text;
 
 namespace AOPossum.Logging

@@ -1,4 +1,5 @@
 ﻿using AOPossum.Aspects;
+using Xunit;
 
 namespace AOPossum.Tests.Aspects
 {

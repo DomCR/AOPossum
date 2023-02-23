@@ -1,4 +1,6 @@
-﻿namespace MockLibrary
+﻿using System;
+
+namespace MockLibrary
 {
 	public class MethodAspectTest
 	{

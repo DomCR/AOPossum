@@ -1,4 +1,6 @@
-﻿namespace AOPossum.Aspects
+﻿using System;
+
+namespace AOPossum.Aspects
 {
 	/// <summary>
 	/// Represents a class that can wrap itself around any given method call.
@@ -9,15 +11,5 @@
 		public virtual void OnEntry(MethodExecutionArgs args) { }
 
 		public virtual void OnExit(MethodExecutionArgs args) { }
-	}
-
-	public interface IOnEntryMethodBoundary
-	{
-		void OnEntry(MethodExecutionArgs args);
-	}
-
-	public interface IOnExitMethodBoundary
-	{
-		void OnExit(MethodExecutionArgs args);
 	}
 }

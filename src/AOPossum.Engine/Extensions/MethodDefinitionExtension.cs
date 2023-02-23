@@ -49,26 +49,26 @@ namespace AOPossum.Engine.Extensions
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Callvirt, onEntryRef));
 		}
 
-		public static void AddOnEntryAspectWithParams(this MethodDefinition runMethod, Type type)
+		public static void AddOnEntryAspectWithParams(this MethodDefinition definition, Type type)
 		{
 			if (type.GetInterface(nameof(IOnEntryMethodBoundary)) == null)
 			{
 				throw new ArgumentException($"Type {type.FullName} does not implement {nameof(IOnEntryMethodBoundary)}", nameof(type));
 			}
 
-			var first = runMethod.Body.Instructions.First();
-			var assembly = runMethod.Module.Assembly;
-			var processor = runMethod.Body.GetILProcessor();
+			var first = definition.Body.Instructions.First();
+			var assembly = definition.Module.Assembly;
+			var processor = definition.Body.GetILProcessor();
 
 			//Add the variable current method
 			VariableDefinition currentMethod = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodBase)));
-			runMethod.Body.Variables.Add(currentMethod);
+			definition.Body.Variables.Add(currentMethod);
 
 			VariableDefinition methodArgs = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodExecutionArgs)));
-			runMethod.Body.Variables.Add(methodArgs);
+			definition.Body.Variables.Add(methodArgs);
 
-			VariableDefinition arrayDef = new VariableDefinition(new ArrayType(runMethod.Module.TypeSystem.Object));
-			runMethod.Body.Variables.Add(arrayDef);
+			VariableDefinition arrayDef = new VariableDefinition(new ArrayType(definition.Module.TypeSystem.Object));
+			definition.Body.Variables.Add(arrayDef);
 
 			//Get the static method GetCurrentMethod
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Call,
@@ -78,24 +78,24 @@ namespace AOPossum.Engine.Extensions
 			ConstructorInfo constructorInfo = typeof(MethodExecutionArgs).GetConstructor(new Type[] { typeof(MethodBase), typeof(object[]) });
 			MethodReference constructorRef = assembly.MainModule.ImportReference(constructorInfo);
 
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldc_I4, runMethod.Parameters.Count));
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Newarr, runMethod.Module.TypeSystem.Object));
+			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
+			processor.InsertBefore(first, Instruction.Create(OpCodes.Newarr, definition.Module.TypeSystem.Object));
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Stloc, arrayDef));
 
 			// loop through the parameters of the method to run
-			for (int i = 0; i < runMethod.Parameters.Count; i++)
+			for (int i = 0; i < definition.Parameters.Count; i++)
 			{
 				processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, arrayDef));
 				processor.InsertBefore(first, processor.Create(OpCodes.Ldc_I4, i));
 				processor.InsertBefore(first, processor.Create(OpCodes.Ldarg, i + 1));
 
-				if (runMethod.Parameters[i].ParameterType.IsValueType)
+				if (definition.Parameters[i].ParameterType.IsValueType)
 				{
-					processor.InsertBefore(first, processor.Create(OpCodes.Box, runMethod.Parameters[i].ParameterType));
+					processor.InsertBefore(first, processor.Create(OpCodes.Box, definition.Parameters[i].ParameterType));
 				}
 				else
 				{
-					processor.InsertBefore(first, processor.Create(OpCodes.Castclass, runMethod.Module.TypeSystem.Object));
+					processor.InsertBefore(first, processor.Create(OpCodes.Castclass, definition.Module.TypeSystem.Object));
 				}
 				processor.InsertBefore(first, processor.Create(OpCodes.Stelem_Ref)); // store in the array
 			}

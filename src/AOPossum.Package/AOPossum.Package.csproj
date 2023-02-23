@@ -2,7 +2,7 @@
 
   <!--FRAMEWORKS-->
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net48;netstandard2.1</TargetFrameworks>
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">True</GeneratePackageOnBuild>
     <IncludeBuildOutput>False</IncludeBuildOutput>
   </PropertyGroup>
@@ -40,9 +40,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.exe"/>
-      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.dll"/>
-      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.runtimeconfig.json"/>
+      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.exe" />
+      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.dll" />
+      <TfmSpecificPackageFile PackagePath="build/bin" Include="$(PublishEngine)/*.runtimeconfig.json" />
     </ItemGroup>
 
     <ItemGroup>
@@ -53,13 +53,13 @@
   </Target>
 
   <Target Name="CopyPackage" AfterTargets="Pack" Condition="Exists('$(SolutionDir)..\..\.packages')">
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />
+    <Copy SourceFiles="$(SolutionDir)AOPossum.Package\bin\Release\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\..\.packages" />
   </Target>
 
   <!--MS BUILD UTILS-->
-  <Target Name="TestMessage" AfterTargets="Build" >
+  <Target Name="TestMessage" AfterTargets="Build">
     <!-- Use $(Property Name) to reference a property -->
-    <!--<Message Text="MSG - $(SolutionDir)AOPossum.Engine/bin/$(Configuration)/$(TargetFramework)/$(PublishForRuntimes)/AOPossum.Engine.exe" Importance="high" />-->
+    <!--<Message Text="MSG - $(SolutionDir)AOPossum.Package\bin\Release\$(PackageId).$(PackageVersion).nupkg" Importance="high" />-->
   </Target>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace AOPossum.Tests.Mocks
+﻿using System;
+
+namespace AOPossum.Tests.Mocks
 {
 	public class ConsoleLabMock
 	{
