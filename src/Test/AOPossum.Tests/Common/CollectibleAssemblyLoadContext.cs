@@ -1,11 +1,9 @@
-﻿using System.Reflection;
-using System.Runtime.Loader;
+﻿using System.Runtime.Loader;
 
 namespace AOPossum.Tests.Common
 {
 	public class CollectibleAssemblyLoadContext : AssemblyLoadContext
 	{
-		public CollectibleAssemblyLoadContext() : base(isCollectible: true)
-		{ }
+		public CollectibleAssemblyLoadContext() : base(isCollectible: true) { }
 	}
 }

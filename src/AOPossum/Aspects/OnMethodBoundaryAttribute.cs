@@ -6,7 +6,7 @@ namespace AOPossum.Aspects
 	/// Represents a class that can wrap itself around any given method call.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-	public abstract class OnMethodBoundaryAttribute : Aspect
+	public abstract class OnMethodBoundaryAttribute : Aspect, IOnEntryMethodBoundary, IOnExitMethodBoundary
 	{
 		public virtual void OnEntry(MethodExecutionArgs args) { }
 

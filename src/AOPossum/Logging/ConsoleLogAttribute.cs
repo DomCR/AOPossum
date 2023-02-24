@@ -5,8 +5,8 @@ using System.Text;
 
 namespace AOPossum.Logging
 {
-	[AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
-	public class ConsoleLogAttribute : Aspect, IOnEntryMethodBoundary
+	[AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+	public class ConsoleLogAttribute : Aspect, IOnEntryMethodBoundary, IOnExitMethodBoundary
 	{
 		public void OnEntry(MethodExecutionArgs args)
 		{
@@ -30,9 +30,9 @@ namespace AOPossum.Logging
 			Console.WriteLine(str);
 		}
 
-		public void LogExit()
+		public void OnExit(MethodExecutionArgs args)
 		{
-			Console.WriteLine("Goodbye I'm at the exit of a method");
+			throw new NotImplementedException();
 		}
 	}
 }

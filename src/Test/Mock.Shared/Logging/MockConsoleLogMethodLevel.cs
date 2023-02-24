@@ -1,7 +1,7 @@
 ﻿using AOPossum.Logging;
 using System;
 
-namespace MockLibrary.Logging
+namespace Mock.Shared.Logging
 {
 	public class MockConsoleLogMethodLevel
 	{

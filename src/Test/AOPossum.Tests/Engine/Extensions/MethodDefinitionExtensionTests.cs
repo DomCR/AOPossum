@@ -2,8 +2,6 @@
 using AOPossum.Logging;
 using AOPossum.Tests.Common;
 using Mono.Cecil;
-using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -12,23 +10,9 @@ using Xunit.Abstractions;
 
 namespace AOPossum.Tests.Engine.Extensions
 {
-	public class MethodDefinitionExtensionTests : IDisposable
+	public class MethodDefinitionExtensionTests : TestContextBase
 	{
-		private AssemblyLoadContext _context;
-
-		private ConsoleOutputUtil _output;
-
-		private AssemblyDefinition _mock;
-
-		public MethodDefinitionExtensionTests(ITestOutputHelper output)
-		{
-			_context = new CollectibleAssemblyLoadContext();
-
-			_output = new ConsoleOutputUtil(output);
-			Console.SetOut(_output);
-
-			_mock = AssemblyDefinition.ReadAssembly(File.OpenRead(Assembly.GetExecutingAssembly().Location));
-		}
+		public MethodDefinitionExtensionTests(ITestOutputHelper output) : base(output) { }
 
 		[Fact]
 		public void AddOnEntryAspectNoParametersTest()
@@ -62,21 +46,6 @@ namespace AOPossum.Tests.Engine.Extensions
 
 			Assert.Equal("INFO | MethodWithOneParamater | [System.String] test parameter | START", _output.OutputLines[0]);
 			Assert.Equal("test parameter", _output.OutputLines[1]);
-		}
-
-		public void Dispose()
-		{
-			_mock.Dispose();
-			_context.Unload();
-		}
-
-		private Assembly reloadMockAssembly()
-		{
-			MemoryStream ms = new MemoryStream();
-			_mock.Write(ms);
-			ms.Seek(0, SeekOrigin.Begin);
-
-			return _context.LoadFromStream(ms);
 		}
 	}
 }
