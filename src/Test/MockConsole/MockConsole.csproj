@@ -5,4 +5,8 @@
     <TargetFrameworks>net6.0;net48</TargetFrameworks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MockLibrary\MockLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
