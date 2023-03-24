@@ -30,7 +30,7 @@ namespace AOPossum.Engine
 			}
 			catch (Exception ex)
 			{
-				ConsoleLogger.LogCritical("Critical error ocurred", ex);
+				ConsoleLogger.LogCritical("An error ocurred", ex);
 			}
 
 			ConsoleLogger.LogInformation("AOPossum.Engine End");

@@ -22,7 +22,7 @@ namespace AOPossum.Tests.Aspects
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mock.Shared.Logging.MockConsoleLogMethodLevel).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.Name == nameof(Mock.Shared.Logging.MockConsoleLogMethodLevel.MethodToLog1));
 
-			m.AddOnEntryAspectWithParams(typeof(OnMethodBoundaryMock));
+			m.AddOnEntryAspect(typeof(OnMethodBoundaryMock));
 
 			Assembly mock = reloadMockAssembly();
 
@@ -44,7 +44,7 @@ namespace AOPossum.Tests.Aspects
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mock.Shared.Logging.MockConsoleLogMethodLevel).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.Name == nameof(Mock.Shared.Logging.MockConsoleLogMethodLevel.MethodToLogWithParam));
 
-			m.AddOnEntryAspectWithParams(typeof(OnMethodBoundaryMock));
+			m.AddOnEntryAspect(typeof(OnMethodBoundaryMock));
 
 			Assembly mock = reloadMockAssembly();
 
@@ -68,7 +68,7 @@ namespace AOPossum.Tests.Aspects
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mock.Shared.Logging.MockConsoleLogMethodLevel).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.Name == nameof(Mock.Shared.Logging.MockConsoleLogMethodLevel.MethodToLogWithMultipleParam));
 
-			m.AddOnEntryAspectWithParams(typeof(OnMethodBoundaryMock));
+			m.AddOnEntryAspect(typeof(OnMethodBoundaryMock));
 
 			Assembly mock = reloadMockAssembly();
 

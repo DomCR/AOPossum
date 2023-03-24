@@ -3,11 +3,11 @@ using System;
 
 namespace AOPossum.Guards
 {
-	public class NotNullAttribute : Aspect
+	public class InRangeAttribute : Aspect
 	{
 		public void Validate(object parameter)
 		{
-			if(parameter == null)
+			if (parameter == null)
 			{
 				throw new ArgumentNullException();
 			}

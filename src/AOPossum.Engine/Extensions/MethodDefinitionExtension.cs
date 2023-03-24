@@ -9,65 +9,56 @@ namespace AOPossum.Engine.Extensions
 	{
 		public static void AddOnEntryAspect(this MethodDefinition definition, Type type)
 		{
-			if (type.GetInterface(nameof(IOnEntryMethodBoundary)) == null)
-			{
-				throw new ArgumentException($"Type {type.FullName} does not implement {nameof(IOnEntryMethodBoundary)}", nameof(type));
-			}
-
-			var first = definition.Body.Instructions.First();
-			var assembly = definition.Module.Assembly;
-			var processor = definition.Body.GetILProcessor();
-
-			//Add the variable current method
-			VariableDefinition currentMethod = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodBase)));
-			definition.Body.Variables.Add(currentMethod);
-
-			VariableDefinition methodArgs = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodExecutionArgs)));
-			definition.Body.Variables.Add(methodArgs);
-
-			//Get the static method GetCurrentMethod
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Call,
-				assembly.MainModule.ImportReference(SymbolExtensions.GetMethodInfo(() => MethodBase.GetCurrentMethod()))));
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Stloc, currentMethod));
-
-			ConstructorInfo constructorInfo = typeof(MethodExecutionArgs).GetConstructor(new Type[] { typeof(MethodBase) });
-			MethodReference constructorRef = assembly.MainModule.ImportReference(constructorInfo);
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldloc, currentMethod));
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Newobj, constructorRef));
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Stloc, methodArgs));
-
-			//Class : logging
-			TypeReference loggerRef = assembly.MainModule.ImportReference(type);
-			MethodReference loggerConstructor = assembly.MainModule.ImportReference(type.GetConstructor(new Type[0]));
-
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Newobj, loggerConstructor));
-
-			//Method : OnEntry
-			MethodReference onEntryRef = assembly.MainModule.ImportReference(SymbolExtensions.GetMethodInfo<IOnEntryMethodBoundary>(l => l.OnEntry(null)));
-
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldloc, methodArgs));
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Callvirt, onEntryRef));
+			typeCheck<IOnEntryMethodBoundary>(type);
+			addBefore(definition.Body.Instructions.First(), definition, type);
 		}
 
-		public static void AddOnEntryAspectWithParams(this MethodDefinition definition, Type type)
+
+		public static void AddOnExitAspect(this MethodDefinition definition, Type type)
 		{
-			if (type.GetInterface(nameof(IOnEntryMethodBoundary)) == null)
+			typeCheck<IOnExitMethodBoundary>(type);
+
+			foreach (Instruction ins in definition.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret))
 			{
-				throw new ArgumentException($"Type {type.FullName} does not implement {nameof(IOnEntryMethodBoundary)}", nameof(type));
+				addBefore(ins, definition, type);
 			}
+		}
 
-			var first = definition.Body.Instructions.First();
-			var assembly = definition.Module.Assembly;
-			var processor = definition.Body.GetILProcessor();
+		private static void addBefore(Instruction first, MethodDefinition definition, Type type)
+		{
+			ModuleDefinition module = definition.Module;
+			AssemblyDefinition assembly = definition.Module.Assembly;
+			ILProcessor processor = definition.Body.GetILProcessor();
 
-			//Add the variable current method
-			VariableDefinition currentMethod = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodBase)));
-			definition.Body.Variables.Add(currentMethod);
+			//Capture the method arguments
+			VariableDefinition methodArgs = addMethodArgs(first, definition, processor);
 
+			//Aspect constructor
+			TypeReference aspectReference = assembly.MainModule.ImportReference(type);
+			MethodReference aspectContructor = assembly.MainModule.ImportReference(type.GetConstructor(new Type[0]));
+
+			processor.InsertBefore(first, Instruction.Create(OpCodes.Newobj, aspectContructor));
+
+			//Aspect method 
+			MethodReference actionReference = assembly.MainModule.ImportReference(SymbolExtensions.GetMethodInfo<IOnEntryMethodBoundary>(l => l.OnEntry(null)));
+
+			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldloc, methodArgs));
+			processor.InsertBefore(first, Instruction.Create(OpCodes.Callvirt, actionReference));
+		}
+
+		private static VariableDefinition addMethodArgs(Instruction first, MethodDefinition definition, ILProcessor processor)
+		{
+			ModuleDefinition module = definition.Module;
+			AssemblyDefinition assembly = definition.Module.Assembly;
+
+			//Add the variables to the current method
 			VariableDefinition methodArgs = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodExecutionArgs)));
 			definition.Body.Variables.Add(methodArgs);
 
-			VariableDefinition arrayDef = new VariableDefinition(new ArrayType(definition.Module.TypeSystem.Object));
+			VariableDefinition currentMethod = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodBase)));
+			definition.Body.Variables.Add(currentMethod);
+
+			VariableDefinition arrayDef = new VariableDefinition(new ArrayType(module.TypeSystem.Object));
 			definition.Body.Variables.Add(arrayDef);
 
 			//Get the static method GetCurrentMethod
@@ -105,17 +96,15 @@ namespace AOPossum.Engine.Extensions
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Newobj, constructorRef));
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Stloc, methodArgs));
 
-			//Class : logging
-			TypeReference loggerRef = assembly.MainModule.ImportReference(type);
-			MethodReference loggerConstructor = assembly.MainModule.ImportReference(type.GetConstructor(new Type[0]));
+			return methodArgs;
+		}
 
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Newobj, loggerConstructor));
-
-			//Method : OnEntry
-			MethodReference onEntryRef = assembly.MainModule.ImportReference(SymbolExtensions.GetMethodInfo<IOnEntryMethodBoundary>(l => l.OnEntry(null)));
-
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldloc, methodArgs));
-			processor.InsertBefore(first, Instruction.Create(OpCodes.Callvirt, onEntryRef));
+		private static void typeCheck<T>(Type type)
+		{
+			if (type.GetInterface(typeof(T).FullName) == null)
+			{
+				throw new ArgumentException($"Type {type.FullName} does not implement {typeof(T).FullName}", nameof(type));
+			}
 		}
 	}
 }

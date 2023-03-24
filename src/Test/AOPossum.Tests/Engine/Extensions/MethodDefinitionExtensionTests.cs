@@ -20,7 +20,7 @@ namespace AOPossum.Tests.Engine.Extensions
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithNoParamaters()");
 
-			m.AddOnEntryAspectWithParams(typeof(ConsoleLogAttribute));
+			m.AddOnEntryAspect(typeof(ConsoleLogAttribute));
 
 			Assembly mock = reloadMockAssembly();
 
@@ -37,7 +37,7 @@ namespace AOPossum.Tests.Engine.Extensions
 			TypeDefinition t = _mock.MainModule.GetType(typeof(Mocks.ConsoleLabMock).FullName);
 			MethodDefinition m = t.Methods.FirstOrDefault(m => m.FullName == "System.Void AOPossum.Tests.Mocks.ConsoleLabMock::MethodWithOneParamater(System.String)");
 
-			m.AddOnEntryAspectWithParams(typeof(ConsoleLogAttribute));
+			m.AddOnEntryAspect(typeof(ConsoleLogAttribute));
 
 			Assembly mock = reloadMockAssembly();
 

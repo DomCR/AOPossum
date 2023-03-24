@@ -61,6 +61,8 @@ namespace AOPossum.Engine.Core
 
 			foreach (MethodInfo m in typeInfo.GetMethods())
 			{
+				this.resolveMethod(m, tdefinition);
+
 				List<Aspect> methodAspects = new List<Aspect>(m.GetCustomAttributes<Aspect>());
 				if (!methodAspects.Any())
 					continue;
@@ -77,9 +79,26 @@ namespace AOPossum.Engine.Core
 			}
 		}
 
-		private void resolveMethod(MethodInfo m)
+		private void resolveMethod(MethodInfo m, TypeDefinition tdefinition)
 		{
+			List<Aspect> methodAspects = new List<Aspect>(m.GetCustomAttributes<Aspect>());
+			if (!methodAspects.Any())
+				return;
 
+			MethodDefinition mdef = tdefinition.GetMethod(m);
+
+			foreach (var item in methodAspects)
+			{
+				if (item is IOnEntryMethodBoundary)
+				{
+					mdef.AddOnEntryAspect(item.GetType());
+				}
+
+				if (item is IOnExitMethodBoundary)
+				{
+					mdef.AddOnExitAspect(item.GetType());
+				}
+			}
 		}
 	}
 }
