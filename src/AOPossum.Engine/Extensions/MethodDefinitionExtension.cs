@@ -10,7 +10,7 @@ namespace AOPossum.Engine.Extensions
 		public static void AddOnEntryAspect(this MethodDefinition definition, Type type)
 		{
 			typeCheck<IOnEntryMethodBoundary>(type);
-			addBefore(definition.Body.Instructions.First(), definition, type);
+			addBefore(definition.Body.Instructions.First(), definition, type, SymbolExtensions.GetMethodInfo<IOnEntryMethodBoundary>(l => l.OnEntry(null)));
 		}
 
 
@@ -20,11 +20,11 @@ namespace AOPossum.Engine.Extensions
 
 			foreach (Instruction ins in definition.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret))
 			{
-				addBefore(ins, definition, type);
+				addBefore(ins, definition, type, SymbolExtensions.GetMethodInfo<IOnExitMethodBoundary>(l => l.OnExit(null)));
 			}
 		}
 
-		private static void addBefore(Instruction first, MethodDefinition definition, Type type)
+		private static void addBefore(Instruction first, MethodDefinition definition, Type type, MethodInfo action)
 		{
 			ModuleDefinition module = definition.Module;
 			AssemblyDefinition assembly = definition.Module.Assembly;
@@ -40,7 +40,7 @@ namespace AOPossum.Engine.Extensions
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Newobj, aspectContructor));
 
 			//Aspect method 
-			MethodReference actionReference = assembly.MainModule.ImportReference(SymbolExtensions.GetMethodInfo<IOnEntryMethodBoundary>(l => l.OnEntry(null)));
+			MethodReference actionReference = assembly.MainModule.ImportReference(action);
 
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Ldloc, methodArgs));
 			processor.InsertBefore(first, Instruction.Create(OpCodes.Callvirt, actionReference));
@@ -48,7 +48,6 @@ namespace AOPossum.Engine.Extensions
 
 		private static VariableDefinition addMethodArgs(Instruction first, MethodDefinition definition, ILProcessor processor)
 		{
-			ModuleDefinition module = definition.Module;
 			AssemblyDefinition assembly = definition.Module.Assembly;
 
 			//Add the variables to the current method
@@ -58,7 +57,7 @@ namespace AOPossum.Engine.Extensions
 			VariableDefinition currentMethod = new VariableDefinition(assembly.MainModule.ImportReference(typeof(MethodBase)));
 			definition.Body.Variables.Add(currentMethod);
 
-			VariableDefinition arrayDef = new VariableDefinition(new ArrayType(module.TypeSystem.Object));
+			VariableDefinition arrayDef = new VariableDefinition(new ArrayType(definition.Module.TypeSystem.Object));
 			definition.Body.Variables.Add(arrayDef);
 
 			//Get the static method GetCurrentMethod

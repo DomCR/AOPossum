@@ -87,5 +87,35 @@ namespace AOPossum.Tests.Aspects
 			Assert.Equal(param1, args.Parameters.ElementAt(0));
 			Assert.Equal(param2, args.Parameters.ElementAt(1));
 		}
+
+		[Fact]
+		public void OnEntryWithParamCollection()
+		{
+			TypeDefinition t = _mock.MainModule.GetType(typeof(Mock.Shared.Logging.MockConsoleLogMethodLevel).FullName);
+			MethodDefinition m = t.Methods.FirstOrDefault(m => m.Name == nameof(Mock.Shared.Logging.MockConsoleLogMethodLevel.MethodToLogWithParamCollection));
+
+			m.AddOnEntryAspect(typeof(OnMethodBoundaryMock));
+
+			Assembly mock = reloadMockAssembly();
+
+			string[] param = new string[]
+			{
+				"parameter 1",
+				"parameter 2",
+				"parameter 3",
+			};
+
+			dynamic instance = mock.CreateInstance(typeof(Mock.Shared.Logging.MockConsoleLogMethodLevel).FullName);
+			instance.MethodToLogWithParamCollection(param);
+
+			Type boundary = mock.DefinedTypes.FirstOrDefault(o => o.FullName == typeof(OnMethodBoundaryMock).FullName);
+			object hasEnteredValue = boundary.GetField(nameof(OnMethodBoundaryMock.HasExecutedOnEntry)).GetValue(null);
+			Assert.True((bool)hasEnteredValue);
+
+			MethodExecutionArgs args = (MethodExecutionArgs)boundary.GetField(nameof(OnMethodBoundaryMock.OnEntryArgs)).GetValue(null);
+			Assert.NotNull(args);
+			Assert.NotEmpty(args.Parameters);
+			Assert.Equal(param, args.Parameters.ElementAt(0));
+		}
 	}
 }

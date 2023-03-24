@@ -33,5 +33,11 @@ namespace Mock.Shared.Logging
 		{
 			Console.WriteLine($"Body of {nameof(MethodToLog2)} with param {param1} | {param2}");
 		}
+
+		[ConsoleLog]
+		public void MethodToLogWithParamCollection(string[] param)
+		{
+			Console.WriteLine($"Body of {nameof(MethodToLog2)} with param {param.Length}");
+		}
 	}
 }
