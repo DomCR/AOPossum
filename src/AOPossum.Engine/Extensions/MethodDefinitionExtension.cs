@@ -18,7 +18,8 @@ namespace AOPossum.Engine.Extensions
 		{
 			typeCheck<IOnExitMethodBoundary>(type);
 
-			foreach (Instruction ins in definition.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret))
+			IEnumerable<Instruction> arr = definition.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret).ToArray();
+			foreach (Instruction ins in arr)
 			{
 				addBefore(ins, definition, type, SymbolExtensions.GetMethodInfo<IOnExitMethodBoundary>(l => l.OnExit(null)));
 			}
@@ -26,7 +27,6 @@ namespace AOPossum.Engine.Extensions
 
 		private static void addBefore(Instruction first, MethodDefinition definition, Type type, MethodInfo action)
 		{
-			ModuleDefinition module = definition.Module;
 			AssemblyDefinition assembly = definition.Module.Assembly;
 			ILProcessor processor = definition.Body.GetILProcessor();
 

@@ -1,9 +1,13 @@
-﻿using AOPossum.Tests.Common;
+﻿using AOPossum.Aspects;
+using AOPossum.Tests.Common;
+using AOPossum.Tests.Mocks;
 using Mono.Cecil;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace AOPossum.Tests
@@ -26,6 +30,12 @@ namespace AOPossum.Tests
 			_mock = AssemblyDefinition.ReadAssembly(File.OpenRead(Assembly.GetExecutingAssembly().Location));
 		}
 
+		public void Dispose()
+		{
+			_mock.Dispose();
+			_context.Unload();
+		}
+
 		protected Assembly reloadMockAssembly()
 		{
 			MemoryStream ms = new MemoryStream();
@@ -35,10 +45,25 @@ namespace AOPossum.Tests
 			return _context.LoadFromStream(ms);
 		}
 
-		public void Dispose()
+		protected MethodDefinition getMethodDefinition<T>(string methodName)
 		{
-			_mock.Dispose();
-			_context.Unload();
+			TypeDefinition t = this._mock.MainModule.GetType(typeof(T).FullName);
+			return t.Methods.FirstOrDefault(m => m.Name == methodName);
+		}
+
+		protected void assertExecution(Type boundary, params object[] pars)
+		{
+			MethodExecutionArgs args = (MethodExecutionArgs)boundary.GetField(nameof(OnMethodBoundaryMock.OnEntryArgs)).GetValue(null);
+			Assert.NotNull(args);
+
+			if (pars == null)
+				return;
+
+			Assert.Equal(pars.Length, args.Parameters.Count());
+			for (int i = 0; i < pars.Length; i++)
+			{
+				Assert.Equal(pars[i], args.Parameters.ElementAt(i));
+			}
 		}
 	}
 }

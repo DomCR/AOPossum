@@ -3,9 +3,11 @@ using System;
 
 namespace AOPossum.Tests.Mocks
 {
-	public class OnMethodBoundaryMock : Aspect, IOnEntryMethodBoundary
+	public class OnMethodBoundaryMock : Aspect, IOnEntryMethodBoundary, IOnExitMethodBoundary
 	{
 		public static bool HasExecutedOnEntry = false;
+
+		public static bool HasExecutedOnExit = false;
 
 		public static int ParameterCount = 0;
 
@@ -18,6 +20,15 @@ namespace AOPossum.Tests.Mocks
 			OnEntryArgs = args;
 
 			Console.WriteLine("On entry mock");
+		}
+
+		public void OnExit(MethodExecutionArgs args)
+		{
+			HasExecutedOnExit = true;
+
+			OnEntryArgs = args;
+
+			Console.WriteLine("On exit mock");
 		}
 	}
 }

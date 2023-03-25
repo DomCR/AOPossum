@@ -7,14 +7,14 @@ using System.Reflection;
 
 namespace AOPossum.Engine.Core
 {
-	public class Injector
+	public class Weaver
 	{
 		private readonly static ModuleDefinition _possum = AssemblyDefinition.ReadAssembly("AOPossum.dll").MainModule;
 		private string _path;
 		private Assembly _assembly;
 		private AssemblyDefinition _assemblyDefinition;
 
-		public Injector(string assemblyPath, string original)
+		public Weaver(string assemblyPath, string original)
 		{
 			this._path = assemblyPath;
 

@@ -23,7 +23,7 @@ namespace AOPossum.Engine
 
 				string original = saveOriginalAssembly(path);
 
-				Injector bypass = new Injector(path, original);
+				Weaver bypass = new Weaver(path, original);
 				bypass.Resolve();
 
 				bypass.Save();
